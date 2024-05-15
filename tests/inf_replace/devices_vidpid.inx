@@ -1,0 +1,11 @@
+%USB\VID_1234&PID_0100.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0100  ; BSL
+%USB\VID_1234&PID_0102.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0102  ; debug device
+%USB\VID_1234&PID_0211.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0211  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(01)
+%USB\VID_1234&PID_0213.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0213  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(02)
+%USB\VID_1234&PID_0215.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0215  ; Measure module (RS232/RS485)
+%USB\VID_1234&PID_0217.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0217  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(03)
+%USB\VID_1234&PID_0219.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0219  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(04)
+%USB\VID_1234&PID_021A.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021A  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(05)
+%USB\VID_1234&PID_021B.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021B  ; Emulator of a Switching Module SpecUnit_Block_ESM
+%USB\VID_1234&PID_021D.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021D  ;SpecUnit_212 Optical arc protection sensor functionality test module
+%USB\VID_1234&PID_021F.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021F  ;SpecUnit_213 UV sensor arc protection simulator

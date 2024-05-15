@@ -1,0 +1,95 @@
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=DEV
+ClassGuid={9FA81B4E-6CBA-4DB3-A1E6-B606C666B6B3}
+Provider=%DEV%
+DriverVer=
+CatalogFile=USBDEV.cat
+
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=ClassReg     
+
+[ClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-20
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Device section =====================
+
+[Manufacturer]
+%MfgName%=Microsoft,NT$ARCH$
+
+; For Win2K
+[Microsoft.NTx86]
+!(DEVICES_VID_PID)
+
+; For XP and later
+[Microsoft.NTAMD64]
+!(DEVICES_VID_PID)
+
+[USBDEV.Dev.NT]
+CopyFiles=USBDEV.Files.Ext
+
+[USBDEV.Dev.NT.Services]
+Addservice = USBDEV, 0x00000002, USBDEV.AddService
+
+[USBDEV.AddService]
+DisplayName    = %USBDEV.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\USBDEV.sys
+AddReg         = USBDEV.AddReg
+LoadOrderGroup = Base
+
+[USBDEV.AddReg]
+HKR,"Parameters","MaximumTransferSize",0x10001,65536
+HKR,"Parameters","DebugLevel",0x10001,2
+
+[USBDEV.Files.Ext]
+USBDEV.sys
+
+[SourceDisksNames]
+1=%Disk_Description%,,,
+
+[SourceDisksFiles]
+USBDEV.sys = 1
+
+;-------------- WDF Coinstaller installation
+[DestinationDirs]
+CoInstaller_CopyFiles = 11
+
+[USBDEV.Dev.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[SourceDisksFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[USBDEV.Dev.NT.Wdf]
+KmdfService = USBDEV, USBDEV_wdfsect
+
+[USBDEV_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+;---------------------------------------------------------------;
+
+[Strings]
+Disk_Description= "USBDEV Installation Disk"
+USBDEV.SvcDesc = "OEM USB driver"
+DEV="OEM Industrial Group"
+ClassName = "OEM USB Devices"
+MfgName="IG DEV"
+!(DEVICES_NAMES)

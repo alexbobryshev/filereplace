@@ -1,0 +1,13 @@
+Line 0
+
+!%@IFNOTSET[TESTCOND]
+Line 1
+!%@ENDIF%
+
+Line 2
+
+!%@IFNOTSET[TESTCOND]
+Line 3
+!%@ENDIF%
+
+Line 4

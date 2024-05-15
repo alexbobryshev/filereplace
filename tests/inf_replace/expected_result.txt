@@ -1,0 +1,125 @@
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=DEV
+ClassGuid={9FA81B4E-6CBA-4DB3-A1E6-B606C666B6B3}
+Provider=%DEV%
+DriverVer=
+CatalogFile=USBDEV.cat
+
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=ClassReg     
+
+[ClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-20
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Device section =====================
+
+[Manufacturer]
+%MfgName%=Microsoft,NT$ARCH$
+
+; For Win2K
+[Microsoft.NTx86]
+%USB\VID_1234&PID_0100.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0100  ; BSL
+%USB\VID_1234&PID_0102.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0102  ; debug device
+%USB\VID_1234&PID_0211.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0211  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(01)
+%USB\VID_1234&PID_0213.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0213  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(02)
+%USB\VID_1234&PID_0215.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0215  ; Measure module (RS232/RS485)
+%USB\VID_1234&PID_0217.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0217  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(03)
+%USB\VID_1234&PID_0219.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0219  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(04)
+%USB\VID_1234&PID_021A.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021A  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(05)
+%USB\VID_1234&PID_021B.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021B  ; Emulator of a Switching Module SpecUnit_Block_ESM
+%USB\VID_1234&PID_021D.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021D  ;SpecUnit_212 Optical arc protection sensor functionality test module
+%USB\VID_1234&PID_021F.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021F  ;SpecUnit_213 UV sensor arc protection simulator
+
+; For XP and later
+[Microsoft.NTAMD64]
+%USB\VID_1234&PID_0100.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0100  ; BSL
+%USB\VID_1234&PID_0102.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0102  ; debug device
+%USB\VID_1234&PID_0211.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0211  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(01)
+%USB\VID_1234&PID_0213.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0213  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(02)
+%USB\VID_1234&PID_0215.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0215  ; Measure module (RS232/RS485)
+%USB\VID_1234&PID_0217.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0217  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(03)
+%USB\VID_1234&PID_0219.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_0219  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(04)
+%USB\VID_1234&PID_021A.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021A  ; Coil Interface FS-SE_SpecUnit_Block_SMCIU(05)
+%USB\VID_1234&PID_021B.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021B  ; Emulator of a Switching Module SpecUnit_Block_ESM
+%USB\VID_1234&PID_021D.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021D  ;SpecUnit_212 Optical arc protection sensor functionality test module
+%USB\VID_1234&PID_021F.DeviceDesc%=USBDEV.Dev, USB\VID_1234&PID_021F  ;SpecUnit_213 UV sensor arc protection simulator
+
+[USBDEV.Dev.NT]
+CopyFiles=USBDEV.Files.Ext
+
+[USBDEV.Dev.NT.Services]
+Addservice = USBDEV, 0x00000002, USBDEV.AddService
+
+[USBDEV.AddService]
+DisplayName    = %USBDEV.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\USBDEV.sys
+AddReg         = USBDEV.AddReg
+LoadOrderGroup = Base
+
+[USBDEV.AddReg]
+HKR,"Parameters","MaximumTransferSize",0x10001,65536
+HKR,"Parameters","DebugLevel",0x10001,2
+
+[USBDEV.Files.Ext]
+USBDEV.sys
+
+[SourceDisksNames]
+1=%Disk_Description%,,,
+
+[SourceDisksFiles]
+USBDEV.sys = 1
+
+;-------------- WDF Coinstaller installation
+[DestinationDirs]
+CoInstaller_CopyFiles = 11
+
+[USBDEV.Dev.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[SourceDisksFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[USBDEV.Dev.NT.Wdf]
+KmdfService = USBDEV, USBDEV_wdfsect
+
+[USBDEV_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+;---------------------------------------------------------------;
+
+[Strings]
+Disk_Description= "USBDEV Installation Disk"
+USBDEV.SvcDesc = "OEM USB driver"
+DEV="OEM Industrial Group"
+ClassName = "OEM USB Devices"
+MfgName="IG DEV"
+USB\VID_1234&PID_0100.DeviceDesc="DEV Bootstrap loader"
+USB\VID_1234&PID_0102.DeviceDesc="DEV debug device"
+USB\VID_1234&PID_0211.DeviceDesc="Coil Interface SpecUnit_Block_SMCIU(01)"
+USB\VID_1234&PID_0213.DeviceDesc="Coil Interface SpecUnit_Block_SMCIU(02)"
+USB\VID_1234&PID_0215.DeviceDesc="USB-RS232/RS485 with the Measure module SpecUnit_Block_USB-RS(04_232-485_Off)"
+USB\VID_1234&PID_0217.DeviceDesc="Coil Interface FS-SE_SpecUnit_Block_SMCIU(03)"
+USB\VID_1234&PID_0219.DeviceDesc="Coil Interface FS-SE_SpecUnit_Block_SMCIU(04)"
+USB\VID_1234&PID_021A.DeviceDesc="Coil Interface FS-SE_SpecUnit_Block_SMCIU(05)"
+USB\VID_1234&PID_021B.DeviceDesc="Emulator of a Switching Module SpecUnit_Block_ESM"
+USB\VID_1234&PID_021D.DeviceDesc="SpecUnit_212 Optical arc protection sensor functionality test module"
+USB\VID_1234&PID_021F.DeviceDesc="SpecUnit_213 UV sensor arc protection simulator"
